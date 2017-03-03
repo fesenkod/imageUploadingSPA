@@ -1,0 +1,20 @@
+<div class="container" ng-controller = "uploadCtrl">
+    <div class="page-header">
+      <h1>Upload Image</h1>
+    </div>
+    <div class="row">
+      <div class="col-sx-12 col-sm-5">
+        <form action="#">
+            <div id="dropZone">
+              <h2>DropZone</h2>
+              <p>Click or drop images</p>
+            </div>
+        </form>
+      </div>
+      <div class="col-sx-12 col-sm-7" id="previewDiv"></div>
+      <div class="col-xs-12 col-sm-4 col-sm-offset-7 buttons">
+        <button type="button" class="btn btn-danger">Clear All</button>
+        <button type="button" class="btn btn-success" ng-click="save()">Save</button>
+      </div>
+    </div>
+</div>

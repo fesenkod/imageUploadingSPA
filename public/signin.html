@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4 container-auth">
+        <h3>Sign in with your Account</h3>
+        <form class="form-horizontal" name="signInForm" action="index.html" method="post" novalidate>
+          <div class="form-group" ng-class="{'has-error':signInForm.userEmail.$invalid && !signInForm.userEmail.$pristine}">
+            <label class="col-xs-2 control-label" for="userEmail">Email</label>
+            <div class="col-xs-12">
+                <input class="form-control" id="userEmail" type="email" name="userEmail" ng-model="userEmail" required>
+                <p class="help-block" ng-show="signInForm.userEmail.$invalid && !signInForm.userEmail.$pristine" ng-cloak>Enter a valid email!</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-xs-2 control-label" for="userPassword">Password</label>
+            <div class="col-xs-12">
+                <input class="form-control" id="userPassword" type="password" name="userPassword" ng-model="userPassword" required>
+            </div>
+          </div>
+          <button ng-click="sign(userEmail, userPassword) " class="btn btn-warning btn-block"
+          name="button" ng-disabled="signInForm.$invalid" disabled="">
+            Submit
+          </button>
+        </form>
+    </div>
+  </div>
+</div>
