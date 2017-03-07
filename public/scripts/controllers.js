@@ -19,6 +19,7 @@ imageUploadApp.controller("imageUploadCtrl", function ($scope, $http) {
   };
 
   $scope.signOut = function () {
+    localStorage.setItem('currentUser', "");
     $scope.changeTemplate("signIn");
     $scope.navTemplate = "unsigned";
   }
@@ -98,6 +99,7 @@ $scope.makeDroppable($scope.element, $scope.callback);
 
 $scope.save = function () {
   var imgObjects = [];
+  // Get all necessary data about chosen images and push them into an array
   $('img').each(function functionName(i, image) {
     var imgObject = {
       'id': i,
@@ -108,6 +110,7 @@ $scope.save = function () {
     };
     imgObjects.push(imgObject);
   });
+  // Append or create currentUser object in localStorage with list of chosen images
   if (JSON.parse(localStorage.getItem('currentUser'))["imageList"]) {
     var userObj = JSON.parse(localStorage.getItem('currentUser'));
     for (var i = 0; i < imgObjects.length; i++) {
@@ -139,10 +142,13 @@ $(document).ready(function () {
 
 imageUploadApp.controller("blocksCtrl", function($scope) {
   $(document).ready(function () {
-    $(".blocksView").append("<img>");
-    if (JSON.parse(localStorage.getItem('currentUser'))["imageList"]) {
-      var source = JSON.parse(localStorage.getItem('currentUser'))["imageList"][0]["link"];
-      $(".blocksView img").attr("src", source);
+    var images = JSON.parse(localStorage.getItem('currentUser'))["imageList"];
+    if (images) {
+      for (var i = 0; i < images.length; i++) {
+        $(".blocksView").append("<img>");
+        var source = images[i]["link"];
+        $(".blocksView img").last().attr("src", source);
+      };
     };
   });
 });
