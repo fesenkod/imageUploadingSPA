@@ -1,4 +1,5 @@
-imageUploadApp.controller("imageUploadCtrl", function ($scope, $http) {
+imageUploadApp.controller("imageUploadCtrl", function ($scope, $http, savingFactory) {
+  $scope.savingFactory = savingFactory;
   $scope.template = "signIn";
   $scope.navTemplate = "unsigned";
   $scope.changeTemplate = function (name) {
@@ -22,11 +23,13 @@ imageUploadApp.controller("imageUploadCtrl", function ($scope, $http) {
     localStorage.setItem('currentUser', "");
     $scope.changeTemplate("signIn");
     $scope.navTemplate = "unsigned";
+    $scope.savingFactory.linksList = [];
   }
 });
 
 
-imageUploadApp.controller("uploadCtrl", function($scope) {
+imageUploadApp.controller("uploadCtrl", function($scope, savingFactory) {
+  $scope.savingFactory = savingFactory;
   $scope.makeDroppable = function (element, callback) {
 
     // handling clicking
@@ -105,9 +108,10 @@ $scope.save = function () {
       'id': i,
       'imageName': $(image).next("p").text(),
       'fileSize': $(image).next("p").next("p").text(),
-      'link': $(image).attr("src"),
+      //'link': $(image).attr("src"),
       'uploadedUser': JSON.parse(localStorage.getItem('currentUser'))["Id"]
     };
+    $scope.savingFactory.linksList.push($(image).attr("src"));
     imgObjects.push(imgObject);
   });
   // Append or create currentUser object in localStorage with list of chosen images
@@ -140,13 +144,14 @@ $(document).ready(function () {
 
 
 
-imageUploadApp.controller("blocksCtrl", function($scope) {
+imageUploadApp.controller("blocksCtrl", function($scope, savingFactory) {
+  $scope.savingFactory = savingFactory;
   $(document).ready(function () {
     var images = JSON.parse(localStorage.getItem('currentUser'))["imageList"];
     if (images) {
       for (var i = 0; i < images.length; i++) {
         $(".blocksView").append("<img>");
-        var source = images[i]["link"];
+        var source = $scope.savingFactory.linksList[i];
         $(".blocksView img").last().attr("src", source);
       };
     };
